@@ -69,7 +69,7 @@ engine = create_engine('postgresql+psycopg2://', creator=lambda: conn)
 
 
 ####################################################
-### SECTION 4: Ingest the dataset into poastgres ###
+### SECTION 4: Ingest the dataset into postgres ###
 ####################################################
 
 # Start total ingestion time timer
