@@ -10,6 +10,7 @@ import psycopg2
 ### SECTION 1: Setup and Download the Dataset ###
 #################################################
 
+
 # Create the directory if it doesn't exist
 os.makedirs("ny_taxi", exist_ok=True)
 
@@ -21,31 +22,13 @@ urllib.request.urlretrieve(url, "ny_taxi/yellow_tripdata_2023-01.parquet")
 
 print("Dataset downloaded successfully!")
 
-
 ###################################
 ### SECTION 2: Load the dataset ###
 ###################################
 
-# Columns
-needed_columns = [
-    "VendorID",
-    "tpep_pickup_datetime",
-    "tpep_dropoff_datetime",
-    "passenger_count",
-    "trip_distance",
-    "RatecodeID",
-    "PULocationID",
-    "DOLocationID",
-    "payment_type",
-    "fare_amount",
-    "tip_amount",
-    "tolls_amount",
-    "total_amount"
-]
 
 # Read the parquet file
 parquet_file = pq.ParquetFile("ny_taxi/yellow_tripdata_2023-01.parquet")
-df = pd.read_parquet("ny_taxi/yellow_tripdata_2023-01.parquet")
 
 
 ################################################
@@ -61,16 +44,29 @@ conn = psycopg2.connect(
     password="db-password"
 )
 
-# Set autocommit to true
-conn.autocommit = True
-
 # Use existing psycopg2 connection to create engine
 engine = create_engine('postgresql+psycopg2://', creator=lambda: conn)
-
 
 ####################################################
 ### SECTION 4: Ingest the dataset into postgres ###
 ####################################################
+
+# The columns we want to extract from the parquet file
+needed_columns = [
+    "VendorID",
+    "tpep_pickup_datetime",
+    "tpep_dropoff_datetime",
+    "passenger_count",
+    "trip_distance",
+    "RatecodeID",
+    "PULocationID",
+    "DOLocationID",
+    "payment_type",
+    "fare_amount",
+    "tip_amount",
+    "tolls_amount",
+    "total_amount"
+]
 
 # Start total ingestion time timer
 t_start = time()
@@ -105,13 +101,11 @@ for batch in parquet_file.iter_batches(batch_size=100000, columns=needed_columns
     df = df[df['dropoff_datetime'].dt.month == 1]
 
     with engine.begin() as conn:
-        # Ingest the data to the database
+        # Ingest the data to the database, overwrite the records if they already exist
         df.to_sql(name='ny_yellow_taxi', schema="de_zoom_camp", con=conn, if_exists='append', index=False)
 
     # End batch timer
     b_end = time()
-    print('inserted another chunk, took %.3f second' % (b_end - b_start))
-
     print('inserted another chunk, took %.3f second' % (b_end - b_start))
 
 # End total ingestion time timer
@@ -122,9 +116,6 @@ print("Finished ingesting data into the postgres database, it took %.3f seconds"
 ##########################
 ### SECTION 5: Cleanup ###
 ##########################
-
-# Close the connection
-conn.close()
 
 # Delete the dataset
 os.remove("ny_taxi/yellow_tripdata_2023-01.parquet")
