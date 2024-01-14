@@ -5,4 +5,6 @@ I'll be documenting my journey from start to finish.
 
 ## Week 1: Docker Containerization and Terraform
 
-
+- Setting up Postgres with PgAdmin Localy.
+- Adding Python Service.
+- Adding data ingestion script.
