@@ -3,7 +3,7 @@ from time import time
 import urllib.request
 import pandas as pd
 import pyarrow.parquet as pq
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 import psycopg2
 
 #################################################
@@ -117,5 +117,13 @@ print("Finished ingesting data into the postgres database, it took %.3f seconds"
 ### SECTION 5: Cleanup ###
 ##########################
 
-# Delete the dataset
+# Delete the parquet file
 os.remove("ny_taxi/yellow_tripdata_2023-01.parquet")
+
+with engine.connect() as conn:
+    # Delete the table
+    query = text("DROP TABLE de_zoom_camp.ny_yellow_taxi")
+    conn.execute(query)
+    conn.commit()
+    conn.close()
+    print("Deleted the table")
