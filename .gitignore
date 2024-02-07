@@ -6,3 +6,4 @@ Week_1/terraform/main.tf
 *.tfstate
 *.tfstate.*
 .gitignore
+Week_1/terraform/snow.env
