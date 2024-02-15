@@ -6,3 +6,7 @@ Week_1/ny_taxi/yellow_tripdata_2023-01.parquet
 *.tfstate.*
 .gitignore
 Week_1/terraform/snow.env
+
+Week_2/mage/data/*.csv.gz
+Week_2/mage/data/mage_data/*
+Week_2/mage/data/Week_2/.ssh_tunnel/aws_emr.json
