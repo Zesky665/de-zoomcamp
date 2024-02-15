@@ -106,12 +106,8 @@ default:
   SNOWFLAKE_ACCOUNT: "{{ env_var('SNOWFLAKE_REGION') }}"
   SNOWFLAKE_DEFAULT_WH: "{{ env_var('SNOWFLAKE_WAREHOUSE') }}"
   SNOWFLAKE_DEFAULT_DB: "{{ env_var('SNOWFLAKE_DB') }}"
-  SNOWFLAKE_DEFAULT_SCHEMA: null              # Optional default schema
-  SNOWFLAKE_PRIVATE_KEY_PASSPHRASE: null      # Optional private key passphrase
   SNOWFLAKE_PRIVATE_KEY_PATH: "{{ env_var('SNOWFLAKE_KEYPATH') }}"
   SNOWFLAKE_ROLE: "{{ env_var('SNOWFLAKE_ROLE') }}"
-  SNOWFLAKE_TIMEOUT: null                     # Optional timeout in seconds
-
   # Trino
   trino:
     catalog: postgresql                       # Change this to the catalog of your choice
