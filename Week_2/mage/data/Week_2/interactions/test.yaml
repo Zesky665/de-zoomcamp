@@ -1,0 +1,7 @@
+inputs:
+  '{''quarter'': 4}':
+    style:
+      input_type: number
+    type: text_field
+layout: []
+variables: {}
