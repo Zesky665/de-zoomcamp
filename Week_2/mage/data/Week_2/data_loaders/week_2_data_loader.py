@@ -21,6 +21,7 @@ def load_data_from_file(*args, **kwargs):
     year = kwargs.get("year")
 
     date = f'{year}-{month}'
+    print(date)
 
     url = f'https://github.com/DataTalksClub/nyc-tlc-data/releases/download/green/green_tripdata_{date}.csv.gz'
 

@@ -16,6 +16,7 @@ def execute_transformer_action(df: DataFrame, *args, **kwargs) -> DataFrame:
 
     Docs: https://docs.mage.ai/guides/transformer-blocks#remove-columns
     """
+
     action_one = build_transformer_action(
         df,
         action_type=ActionType.REMOVE,
@@ -40,12 +41,14 @@ def execute_transformer_action(df: DataFrame, *args, **kwargs) -> DataFrame:
     month = kwargs.get("month")
     year = kwargs.get("year")
 
-    # Drop rows with invalid values
-    df = df[df['pickup_datetime'].dt.year == year]
-    df = df[df['dropoff_datetime'].dt.year == year]
+    print(f'{year}-{month}')
 
-    df = df[df['pickup_datetime'].dt.month == month]
-    df = df[df['dropoff_datetime'].dt.month == month]
+    # Drop rows with invalid values
+    df = df[df['pickup_datetime'].dt.year == int(year)]
+    df = df[df['dropoff_datetime'].dt.year == int(year)]
+
+    df = df[df['pickup_datetime'].dt.month == int(month)]
+    df = df[df['dropoff_datetime'].dt.month == int(month)]
 
     return df
 

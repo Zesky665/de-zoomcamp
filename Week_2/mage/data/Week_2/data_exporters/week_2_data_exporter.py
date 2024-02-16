@@ -28,5 +28,5 @@ def export_data_to_snowflake(df: DataFrame, **kwargs) -> None:
             table_name,
             database,
             schema,
-            if_exists='replace',  # Specify resolution policy if table already exists
+            if_exists='append',  # Specify resolution policy if table already exists
         )
