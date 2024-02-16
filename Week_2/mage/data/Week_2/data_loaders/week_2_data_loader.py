@@ -17,26 +17,39 @@ def load_data_from_file(*args, **kwargs):
 
     Docs: https://docs.mage.ai/design/data-loading#fileio
     """
-    print("_________args___________")
-    print(args)
-    print("_________args___________")
-    print("_________kwargs___________")
-    print(kwargs)
-    print("_________kwargs___________")
-    
     month = kwargs.get("month")
-    print(month)
-    
     year = kwargs.get("year")
-    print(year)
 
     date = f'{year}-{month}'
-    print(date)
 
     url = f'https://github.com/DataTalksClub/nyc-tlc-data/releases/download/green/green_tripdata_{date}.csv.gz'
-    print(url)
 
-    df = pd.read_csv(url, sep=',', compression='gzip')
+    taxi_dtypes = {
+        'VendorID': float,
+        'store_and_fwd_flag': str,
+        'RatecodeID': float,
+        'PULocationID': float,
+        'DOLocationID': float,
+        'passenger_count': float,
+        'trip_distance': float,
+        'fare_amount': float,
+        'extra': float,
+        'mta_tax': float,
+        'tip_amount': float,
+        'tolls_amount': float,
+        'ehail_fee': float,
+        'improvement_surcharge': float,
+        'total_amount': float,
+        'payment_type': float,
+        'trip_type': float,
+        'congestion_surcharge': float
+    }
+
+    parse_dates = ['lpep_pickup_datetime', 'lpep_dropoff_datetime']
+
+    df = pd.read_csv(url, sep=',', compression='gzip', parse_dates=parse_dates)
+    df = df.astype(taxi_dtypes)
+
     return df
 
 

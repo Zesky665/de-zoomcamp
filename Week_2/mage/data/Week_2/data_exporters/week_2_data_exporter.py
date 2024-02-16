@@ -16,9 +16,9 @@ def export_data_to_snowflake(df: DataFrame, **kwargs) -> None:
 
     Docs: https://docs.mage.ai/design/data-loading#snowflake
     """
-    table_name = 'your_table_name'
-    database = 'your_database_name'
-    schema = 'your_schema_name'
+    table_name = 'WEEK_2_DE_ZC_TABLE'
+    database = 'WEEK_2_DE_ZC_DB'
+    schema = 'WEEK_2_DE_ZC_DB_SCHEMA'
     config_path = path.join(get_repo_path(), 'io_config.yaml')
     config_profile = 'default'
 

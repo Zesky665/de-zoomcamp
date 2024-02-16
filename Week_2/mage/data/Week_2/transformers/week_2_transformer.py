@@ -1,7 +1,7 @@
 from mage_ai.data_cleaner.transformer_actions.base import BaseAction
 from mage_ai.data_cleaner.transformer_actions.constants import ActionType, Axis
 from mage_ai.data_cleaner.transformer_actions.utils import build_transformer_action
-from pandas import DataFrame
+from pandas import DataFrame, to_datetime
 
 if 'transformer' not in globals():
     from mage_ai.data_preparation.decorators import transformer
@@ -16,14 +16,38 @@ def execute_transformer_action(df: DataFrame, *args, **kwargs) -> DataFrame:
 
     Docs: https://docs.mage.ai/guides/transformer-blocks#remove-columns
     """
-    action = build_transformer_action(
+    action_one = build_transformer_action(
         df,
         action_type=ActionType.REMOVE,
-        arguments=[],
+        arguments=['extra', 'mat_tax', 'ehail_fee', 'improvement_surcharge', 'congestion_surcharge'],
         axis=Axis.COLUMN,
     )
 
-    return BaseAction(action).execute(df)
+    df = BaseAction(action_one).execute(df)
+
+    # Rename columns
+    new_column_names = {
+        "VendorID": "vendor_id",
+        "lpep_pickup_datetime": "pickup_datetime",
+        "lpep_dropoff_datetime": "dropoff_datetime",
+        "RatecodeID": "rate_code_id",
+        "PULocationID": "pickup_location",
+        "DOLocationID": "dropoff_location",
+    }
+
+    df = df.rename(columns=new_column_names)
+
+    month = kwargs.get("month")
+    year = kwargs.get("year")
+
+    # Drop rows with invalid values
+    df = df[df['pickup_datetime'].dt.year == year]
+    df = df[df['dropoff_datetime'].dt.year == year]
+
+    df = df[df['pickup_datetime'].dt.month == month]
+    df = df[df['dropoff_datetime'].dt.month == month]
+
+    return df
 
 
 @test
