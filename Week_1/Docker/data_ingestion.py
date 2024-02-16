@@ -100,6 +100,9 @@ for batch in parquet_file.iter_batches(batch_size=100000, columns=needed_columns
     df = df[df['pickup_datetime'].dt.month == 1]
     df = df[df['dropoff_datetime'].dt.month == 1]
 
+    # Drop rows with no passangers
+    df = df[df['passenger_count'] > 0]
+
     with engine.begin() as conn:
         # Ingest the data to the database, overwrite the records if they already exist
         df.to_sql(name='ny_yellow_taxi', schema="de_zoom_camp", con=conn, if_exists='append', index=False)
