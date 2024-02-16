@@ -1,0 +1,25 @@
+triggers:
+- envs: []
+  last_enabled_at: 2024-02-13 23:46:35.378474
+  name: epic music
+  pipeline_uuid: week_2
+  schedule_interval: null
+  schedule_type: api
+  settings: null
+  sla: null
+  start_time: 2024-02-13 23:45:00
+  status: active
+  variables:
+    month: 10
+    year: 2020
+- envs: []
+  last_enabled_at: 2024-02-13 23:46:35.378474
+  name: epic_music
+  pipeline_uuid: week_2
+  schedule_interval: null
+  schedule_type: api
+  settings: null
+  sla: null
+  start_time: 2024-02-13 23:45:00
+  status: inactive
+  variables: {}

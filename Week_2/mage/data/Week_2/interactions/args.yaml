@@ -1,0 +1,23 @@
+inputs:
+  args:
+    style:
+      input_type: number
+    type: text_field
+layout:
+- - variable: quarter
+    width: 1
+- - variable: year
+    width: 1
+variables:
+  quarter:
+    input: args
+    name: quarter
+    required: true
+    types:
+    - integer
+  year:
+    input: args
+    name: year
+    required: true
+    types:
+    - integer
