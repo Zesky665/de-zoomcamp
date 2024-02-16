@@ -59,3 +59,5 @@ def test_output(output, *args) -> None:
     Template code for testing the output of the block.
     """
     assert output is not None, 'The output is undefined'
+    assert isinstance(output, DataFrame), 'The output is not a DataFrame'
+    assert output.shape[0] > 0, 'The output DataFrame has the wrong number of columns'

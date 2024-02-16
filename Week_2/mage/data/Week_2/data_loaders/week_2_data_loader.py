@@ -60,3 +60,4 @@ def test_output(output, *args) -> None:
     Template code for testing the output of the block.
     """
     assert output is not None, 'The output is undefined'
+    assert output.shape[0] > 0, 'The output dataframe is empty'
