@@ -10,3 +10,5 @@ Week_1/terraform/snow.env
 Week_2/mage/data/*.csv.gz
 Week_2/mage/data/mage_data/*
 Week_2/mage/data/Week_2/.ssh_tunnel/aws_emr.json
+Week_2/mage/.env
+Week_2/mage/data/snowflake_tf_snow_key.p8

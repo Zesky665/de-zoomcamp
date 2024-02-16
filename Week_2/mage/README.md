@@ -23,3 +23,9 @@ docker-compose build
 docker-compose up
 ```
 
+4. Once the Mage instance is running, use the script to run the pipeline.
+
+```
+python3 ingenst_quarter.py <year> <month>
+```
+
